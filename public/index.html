@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<meta name="application-name" content="Chat">
+		<meta name="description" content="Simple PWA Chat for course work">
+		<meta name="theme-color" content="#1b263b">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="#1b263b">
+		<meta name="apple-mobile-web-app-title" content="Chat">
+
+		<title>Chat</title>
+
+		<link rel="manifest" href="manifest.json">
+		<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+		<link rel="apple-touch-icon" href="/images/icons/icon-152x152.png">
+
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link rel="stylesheet" href="/css/style.css">
+	</head>
+	<body>
+		<header>
+			<div class="container">
+				<div>
+					<span id="logo">Chat</span>
+				</div>
+				<div id="authedPanel" class="forAuthed">
+					<img src="" id="userPic">
+					<button id="signOut">Sign out</button>
+				</div>
+				<div id="notAuthedPanel" class="forNotAuthed">
+					<button id="signIn">Sign in</button>
+				</div>
+			</div>
+		</header>
+		<main>
+			<div class="container forAuthed mainContent">
+				<div id="chatArea">
+					<progress class="pure-material-progress-circular"></progress>
+				</div>
+				<form id="messageForm" method="POST">
+					<input type="text" id="msg" placeholder="Write a message..." autocomplete="off">
+					<button id="sendbtn" disabled="disabled"><span class="material-icons">send</span></button>
+				</form>
+			</div>
+			<div id="layoutForNotAuthed" class="container forNotAuthed coverContainer">
+				<progress class="pure-material-progress-circular"></progress>
+			</div>
+		</main>
+    <script>var isOffline = false;</script>
+		<!-- Firebase -->
+		<script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-app.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-auth.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-messaging.js"></script>
+    <!-- Other -->
+    <script src="/js/firebase_init.js"></script>
+    <script src="/js/chat_functions.js"></script>
+    <script src="/js/script.js"></script>
+  </body>
+</html>

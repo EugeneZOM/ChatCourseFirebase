@@ -1,0 +1,71 @@
+importScripts('https://www.gstatic.com/firebasejs/7.13.1/firebase-app.js');
+importScripts('https://www.gstatic.com/firebasejs/7.13.1/firebase-messaging.js');
+
+const CACHE_NAME = "cache-v1";
+const filesToCache = [
+  '/css/style.css',
+  '/js/chat_functions.js',
+  '/js/firebase_init.js',
+  '/js/script.js',
+  '/offline.html',
+  'https://fonts.googleapis.com/css2?family=Roboto&display=swap',
+  'https://fonts.googleapis.com/icon?family=Material+Icons'
+];
+const OFFLINE_FILE = 'offline.html';
+
+self.addEventListener("install", (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => {
+      cache.add(new Request(OFFLINE_FILE), {cache: 'reload'});
+      return cache.addAll(filesToCache);
+    })
+  );
+  console.log("Service Worker installing");
+});
+
+self.addEventListener("activate", () => {
+  console.log("Service Worker activating");
+  self.clients.claim();
+});
+
+self.addEventListener("fetch", (event) => {
+  if(event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request)
+      .catch(() => caches.open(CACHE_NAME).then((cache) => cache.match(OFFLINE_FILE)))
+    );
+  }
+});
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBjV9M-Yvl8ffoqYFvYjNdV5NB-ZAYj5vU",
+  authDomain: "pwa-chat-e5003.firebaseapp.com",
+  databaseURL: "https://pwa-chat-e5003.firebaseio.com",
+  projectId: "pwa-chat-e5003",
+  storageBucket: "pwa-chat-e5003.appspot.com",
+  messagingSenderId: "49804087554",
+  appId: "1:49804087554:web:f590282701671aa7ef721b"
+};
+
+firebase.initializeApp(firebaseConfig);
+const messaging = firebase.messaging();
+
+messaging.setBackgroundMessageHandler((payload) => {
+  console.log('[FirebaseMessagingSW] Received background message ', payload);
+  localStorage.setItem('payload', payload);
+
+  const notificationTitle = 'PWA Chat';
+  const notificationOptions = {
+    body: "You've got a new message!",
+    icon: 'https://pwa-chat-e5003.web.app/images/icons/icon-128x128.png',
+    tag: "PWA-Chat_Notification"
+  };
+
+  return self.registration.showNotification(notificationTitle, notificationOptions);
+});
+
+self.addEventListener("notificationclick", (event) => {
+  console.log(event);
+  event.notification.close();
+  event.waitUntil( clients.openWindow("https://pwa-chat-e5003.web.app").then(() => {}) );
+});

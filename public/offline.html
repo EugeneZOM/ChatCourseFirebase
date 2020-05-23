@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<meta name="application-name" content="Chat">
+		<meta name="description" content="Simple PWA Chat for course work">
+		<meta name="theme-color" content="#1b263b">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="#1b263b">
+		<meta name="apple-mobile-web-app-title" content="Chat">
+
+		<title>Chat</title>
+
+		<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+		<link rel="apple-touch-icon" href="/images/icons/icon-152x152.png">
+
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link rel="stylesheet" href="/css/style.css">
+    <style>
+      #chatArea {
+        margin-bottom: 0;
+      }
+    </style>
+	</head>
+	<body>
+		<header>
+			<div class="container">
+				<div>
+					<span id="logo">Chat</span>
+				</div>
+			</div>
+		</header>
+		<main>
+			<div class="container forAuthed mainContent">
+				<div id="chatArea">
+					<progress class="pure-material-progress-circular"></progress>
+				</div>
+			</div>
+			<div id="layoutForNotAuthed" class="container forNotAuthed coverContainer">
+				<progress class="pure-material-progress-circular"></progress>
+			</div>
+		</main>
+    <script>var isOffline = true;</script>
+    <!-- Other -->
+    <script src="/js/chat_functions.js"></script>
+    <script src="/js/offline_script.js"></script>
+  </body>
+</html>
